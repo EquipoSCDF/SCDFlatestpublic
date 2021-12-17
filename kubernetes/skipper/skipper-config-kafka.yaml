@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: skipper
+  labels:
+    app: skipper
+data:
+  application.yaml: |-
+    spring:
+      cloud:
+        skipper:
+          server:
+            platform:
+              kubernetes:
+                accounts:
+                  default:
+                    environmentVariables: 'SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS=b-1.msk262.14gc92.c17.kafka.us-east-1.amazonaws.com:9092,SPRING_CLOUD_STREAM_KAFKA_BINDER_ZK_NODES=z-1.msk262.14gc92.c17.kafka.us-east-1.amazonaws.com:2181'
+                    limits:
+                      memory: 1024Mi
+                      cpu: 500m
+                    readinessProbeDelay: 120
+                    livenessProbeDelay: 90
+      datasource:
+        url: jdbc:mysql://aurora57.cluster-cfkwcska1oxw.us-east-1.rds.amazonaws.com:3306/skipper
+        username: admin
+        password: ${mysql-root-password}
+        driverClassName: org.mariadb.jdbc.Driver
+        testOnBorrow: true
+        validationQuery: "SELECT 1"

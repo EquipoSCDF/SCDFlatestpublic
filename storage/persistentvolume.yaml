@@ -1,0 +1,15 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: test2
+  labels:
+    type: amazonEBS
+spec:
+  storageClassName: gp2
+  capacity:
+    storage: 10Gi
+  accessModes:
+  - ReadWriteOnce
+  awsElasticBlockStore:
+    volumeID: aws://us-east-1b/vol-0ff16e6b9644bcaba
+    fsType: ext4

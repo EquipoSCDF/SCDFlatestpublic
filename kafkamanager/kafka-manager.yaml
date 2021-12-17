@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-manager
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-manager
+  template:
+    metadata:
+      labels:
+        app: kafka-manager
+    spec:
+      containers:
+      - name: kafka-manager
+        image: vishant07/kafka-manager:v1
+        ports:
+        - containerPort: 9000
+        env:
+        - name: ZK_HOSTS
+          value: z-3.msk262.14gc92.c17.kafka.us-east-1.amazonaws.com:2181,z-1.msk262.14gc92.c17.kafka.us-east-1.amazonaws.com:2181,z-2.msk262.14gc92.c17.kafka.us-east-1.amazonaws.com:2181
+        command:
+        - ./bin/kafka-manager
+        - -Dhttp.port=9000
